@@ -1,0 +1,49 @@
+<html lang='en'>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Hris</title>
+  <style>
+    .flex {
+      display: flex;
+      width: 100%;
+    }
+    table, td, th {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px 10px;
+    }
+    tr.background-warning {
+      background-color: rgb(248, 213, 213);
+    }
+  </style>
+</head>
+<body style='margin: 10px'>
+  <center>
+    <img src='https://teamunibrains.com/wp-content/uploads/2022/01/UNIBRAIN-LOGO-01-2-150x150.png' />
+    <section>
+      <main class='flex'>
+        <table>
+          <caption><h1>Monthly Report</h1></caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Total Time</th>
+              <th>Remaining Leaves</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each data}}
+              <tr class="{{#unless this.checkOut}}background-warning{{/unless}}">
+                <td>{{this.fullName}}</td>
+                <td>{{this.totalTime}}</td>
+                <td>{{this.RemainingLeaves}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </main>
+    </section>
+  </center>
+</body>
+</html>

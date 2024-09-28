@@ -1,0 +1,388 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+enum ActionEnum {
+  DELETE
+  INSERT
+}
+
+input CheckOutInput {
+  checkOut: DateTime
+  id: String!
+  note: String
+}
+
+type CheckOutType {
+  lastCheckInDate: DateTime!
+  lastCheckOutDate: DateTime
+  lastCheckOutId: String!
+  message: String!
+}
+
+input CreateHolidayInput {
+  holiday_date: DateTime!
+  holiday_name: String!
+  userId: String!
+}
+
+input CreateLeaveInput {
+  end_date: DateTime
+  leave_type: String!
+  message: String
+  reason: String!
+  remainingLeavesDays: Float
+  session: String
+  start_date: DateTime!
+  status: LeaveStatusEnum! = PENDING
+  userId: String!
+}
+
+input CreateModuleInput {
+  moduleName: String!
+}
+
+input CreatePermissionInput {
+  moduleId: String!
+  permissionName: String!
+}
+
+input CreateRoleInput {
+  role_type: String!
+}
+
+input CreateUserInput {
+  dob: String
+  email: String!
+  firstName: String
+  lastName: String
+  mobileNumber: String
+  remainingLeavesDays: Float
+  roleIds: [String!]!
+  status: UserStatusEnum = EMAIL_NOT_VERIFIED
+}
+
+type CreateUserReturnType {
+  message: String
+  valid: Boolean
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input FilterInput {
+  endDate: DateTime!
+  startDate: DateTime!
+}
+
+input LeaveFilter {
+  endDate: DateTime
+  pageNumber: Float
+  pageSize: Float
+  startDate: DateTime
+  status: [LeaveStatusEnum!]
+  usersId: [String!]
+}
+
+enum LeaveStatusEnum {
+  APPROVED
+  CANCELLED
+  DECLINED
+  PENDING
+  REAPPLIED
+}
+
+type Module {
+  id: String!
+
+  """Module name"""
+  moduleName: String
+  permission: [permission!]
+}
+
+type Mutation {
+  checkIn: attendances!
+  checkOut(input: CheckOutInput!): attendances!
+  createHoliday(input: CreateHolidayInput!): ReturnTypeHoliday!
+  createLeave(input: CreateLeaveInput!): ReturnLeave!
+  createModule(input: CreateModuleInput!): Module!
+  createPermission(input: CreatePermissionInput!): permission!
+  createRole(input: CreateRoleInput!): ReturnCreateRole!
+  createUser(input: CreateUserInput!): CreateUserReturnType!
+  getAttendanceByDate(input: FilterInput!): [attendances!]!
+  lastCheckoutAttendance(input: CheckOutInput!): attendances!
+  removeAttendance(id: String!): Boolean!
+  removeHoliday(id: String!): ReturnTypeHoliday!
+  removeLeave(id: String!): RemoveLeaveReturn!
+  removeModule(id: String!): Module!
+  removePermission(id: Int!): permission!
+  removeRole(id: String!): roles!
+  removeUser(id: String!): ReturnType!
+  resetPassword(input: ResetPasswordInput!): ReturnType!
+  resetRemainingLeaves(id: String!): ReturnType!
+  updateHoliday(input: UpdateHolidayInput!): ReturnTypeHoliday!
+  updateLeave(input: UpdateLeaveInput!): ReturnLeave!
+  updateLeaveStatus(input: UpdateLeaveStatus!): ReturnLeave!
+  updateModule(input: UpdateModuleInput!): Module!
+  updatePermission(input: UpdatePermissionInput!): permission!
+  updateProfile(input: UpdateUserInput!): User!
+  updateRole(input: UpdateRoleDto!): roles!
+  updateUser(input: UpdateUserInput!): User!
+}
+
+input PaginationInput {
+  pageNumber: Float!
+  pageSize: Float!
+}
+
+type Query {
+  currentUser: User!
+  currentUserLeaves(input: PaginationInput!): leaveList!
+  getAttendance: [attendances!]!
+  getAttendanceReport(filter: ReportInput!): [attendances!]!
+  getCurrentDayOnLeaveUsers: [leaves!]!
+  getLastCheckOut: [CheckOutType!]!
+  getMonthlyHours: [Float!]!
+  getThisMonthAttendance: [attendances!]!
+  getTimeDifference: [Float!]!
+  getTodayAttendance: [attendances!]!
+  getUsers: [User!]!
+  holiday(id: String!): holidays!
+  holidays(input: PaginationInput): holidayList!
+  leave(id: String!): leaves!
+  leaveReport(filter: LeaveFilter): [leaves!]!
+  leaves(input: LeaveFilter!): leaveList!
+  moduleById(id: String!): Module!
+  modules: [Module!]!
+  permission(id: Int!): permission!
+  permissions: [permission!]!
+  roles: [roles!]!
+  upcomingHolidays: [holidays!]!
+  users(filter: UserFilleter): userList!
+}
+
+type RemoveLeaveReturn {
+  message: String
+  valid: Boolean
+}
+
+input ReportInput {
+  endDate: DateTime
+  startDate: DateTime
+  usersId: [String!]
+}
+
+input ResetPasswordInput {
+  email: String!
+  newPassword: String!
+  oldPassword: String!
+}
+
+type ReturnCreateRole {
+  message: String!
+  valid: Boolean!
+}
+
+type ReturnLeave {
+  message: String
+  remainingLeavesDays: Float
+  status: LeaveStatusEnum
+  valid: Boolean
+}
+
+type ReturnType {
+  message: String
+  valid: Boolean
+}
+
+type ReturnTypeHoliday {
+  message: String
+  valid: Boolean
+}
+
+input RolePermissionUpdate {
+  action: ActionEnum!
+  permissionIds: [String!]!
+}
+
+enum RoleStatusEnum {
+  ACTIVE
+  DELETED
+}
+
+input UpdateHolidayInput {
+  holiday_date: DateTime
+  holiday_name: String
+  id: String!
+  userId: String
+}
+
+input UpdateLeaveInput {
+  end_date: DateTime
+  id: String!
+  leave_type: String
+  message: String
+  reApplyReason: String
+  reason: String
+  remainingLeavesDays: Float
+  session: String
+  start_date: DateTime
+  status: LeaveStatusEnum = PENDING
+  totalLeavesDays: Float
+  userId: String!
+}
+
+input UpdateLeaveStatus {
+  id: String!
+  message: String
+  status: LeaveStatusEnum!
+}
+
+input UpdateModuleInput {
+  id: String!
+  moduleName: String!
+}
+
+input UpdatePermissionInput {
+  id: String!
+  moduleId: String!
+  permissionName: String!
+}
+
+input UpdateRoleDto {
+  id: String!
+  permission: RolePermissionUpdate
+  role_type: String
+}
+
+input UpdateUserInput {
+  description: String
+  dob: String
+  email: String!
+  firstName: String
+  id: String!
+  lastName: String
+  leaveDays: Float
+  location: String
+  mobileNumber: String
+  remainingLeavesDays: Float
+  roleIds: [String!]
+  status: UserStatusEnum = EMAIL_NOT_VERIFIED
+}
+
+type User {
+  attendances: [attendances!]!
+  createdAt: DateTime
+  deletedAt: DateTime
+  description: String
+  dob: String
+  email: String!
+  firstName: String
+  holidays: [holidays!]
+  id: String!
+  isSuperAdmin: Boolean!
+  lastName: String
+  leaves: [leaves!]
+  location: String
+  mobileNumber: String
+  modules: [String!]
+  permissions: [String!]
+  profilePicture: String
+  refreshToken: String
+  refreshTokenExpiry: Float
+  remainingLeavesDays: Float
+  roles: [roles!]!
+  status: UserStatusEnum!
+  updatedAt: DateTime
+  userTimeZone: String
+}
+
+input UserFilleter {
+  firstName: String
+  id: String
+  pageNumber: Float!
+  pageSize: Float!
+  searchString: String
+  status: String
+}
+
+enum UserStatusEnum {
+  ACTIVE
+  DELETED
+  EMAIL_NOT_VERIFIED
+  INACTIVE
+  INVITED
+  SYSTEM
+}
+
+type attendances {
+  checkIn: DateTime!
+  checkOut: DateTime
+  createdAt: DateTime
+  currentTime: Float!
+  id: String!
+  isCheck: Boolean!
+  note: String
+  updatedAt: DateTime
+  user: User
+}
+
+type holidayList {
+  data: [holidays!]
+  pageNumber: Float!
+  totalCount: Float!
+}
+
+type holidays {
+  holiday_date: DateTime!
+  holiday_name: String!
+  id: String!
+  user: User
+}
+
+type leaveList {
+  data: [leaves!]
+  pageNumber: Float!
+  totalCount: Float!
+}
+
+type leaves {
+  createdAt: DateTime
+  end_date: DateTime
+  id: String!
+  leave_type: String!
+  message: String
+  reApplyCount: Float
+  reApplyReason: String
+  reason: String!
+  session: String
+  start_date: DateTime!
+  status: LeaveStatusEnum!
+  totalLeavesDays: Float
+  user: User
+}
+
+type permission {
+  id: String!
+  module: Module
+
+  """Permission name"""
+  permissionName: String!
+  role: [roles!]
+}
+
+type roles {
+  id: String!
+  permission: [permission!]
+  role_type: String!
+  status: RoleStatusEnum!
+  users: [User!]
+}
+
+type userList {
+  data: [User!]
+  pageNumber: Float!
+  totalCount: Float!
+}
